@@ -75,9 +75,9 @@ function FunctionalApp() {
             <div>Request Method: {reqParams.method}</div>
             <div>URL: {reqParams.url}</div>
             {/* function is passed as props in the Form component */}
-            <Form handleApiCall={callApi} setState={setReqParams} />
+            <Form handleApiCall={callApi}  />
 
-            <Results data={data} setData={setData} />
+            <Results data={data}  />
             <Footer />
         </React.Fragment>
     )
