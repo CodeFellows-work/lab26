@@ -56,16 +56,15 @@ function FunctionalApp() {
     // Function that will be used as mock data 
     const callApi = (requestParams) => {
         // mock output
-        console.log(requestParams.formData)
+        console.log('From App.js', requestParams.formData)
         setReqParams(requestParams.formData)
     const data = {
-        count: 2,
-        results: [
-            {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-            {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-        ],
+        Abilities: requestParams.formData.data.data.abilities.length,
+        stats: requestParams.formData.data.data.stats,
+        sprite: requestParams.formData.data.data.sprites.front_default,
     };
-    setData({data});
+    setData(data);
+    console.log('data from App.js', data)
     }
 
     return(
