@@ -1,6 +1,6 @@
 // Library imports 
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 //  Styling imports 
 import './app.scss';
 
@@ -10,43 +10,6 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
-// class App extends React.Component {
-
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       data: null,
-//       requestParams: {},
-//     };
-//   }
-
-//   callApi = (requestParams) => {
-//     // mock output
-//     const data = {
-//       count: 2,
-//       results: [
-//         {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-//         {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-//       ],
-//     };
-//     this.setState({data, requestParams});
-//   }
-
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <Header />
-//         <div>Request Method: {this.state.requestParams.method}</div>
-//         <div>URL: {this.state.requestParams.url}</div>
-//         <Form handleApiCall={this.callApi} />
-//         <Results data={this.state.data} />
-//         <Footer />
-//       </React.Fragment>
-//     );
-//   }
-// }
-
-
 
 function FunctionalApp() {
     // State variable and set state of that variable 
@@ -54,27 +17,21 @@ function FunctionalApp() {
     const [reqParams, setReqParams] = useState("");
     
     // Function that will be used as mock data 
-    const callApi = (requestParams) => {
-        // mock output
-        console.log('From App.js', requestParams.formData)
-        setReqParams(requestParams.formData)
-    const data = {
-        Abilities: requestParams.formData.data.data.abilities.length,
-        stats: requestParams.formData.data.data.stats,
-        sprite: requestParams.formData.data.data.sprites.front_default,
-    };
-    setData(data);
-    console.log('data from App.js', data)
-    }
+useEffect(() => {
+    if(Object.keys(reqParams).length) axios(reqParams).then(res => {
+        setData(res)
+    });
+    console.log('reqParams from App', reqParams);
+},[reqParams]);
 
     return(
         <React.Fragment>
             <Header />
             
-            <div>Request Method: {reqParams.method}</div>
+            <div>Request Method: {reqParams.methods}</div>
             <div>URL: {reqParams.url}</div>
             {/* function is passed as props in the Form component */}
-            <Form handleApiCall={callApi}  />
+            <Form setReqParams={setReqParams} />
 
             <Results data={data}  />
             <Footer />
