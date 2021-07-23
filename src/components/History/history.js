@@ -5,9 +5,10 @@ function History(props){
         <div>
           <h1>History</h1>
       <ul>
-        {props.history ? props.history.map(index => {
+        {props.history.history ? props.history.history.map(index => {
           return <li
-            key={index.history}>
+            key={index.history} 
+            onClick={()=> props.dispatch(props.deleteHistory(index.history))}>
               {index.history}
             </li>
         }) : ''}
