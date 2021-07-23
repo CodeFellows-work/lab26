@@ -59,8 +59,9 @@ useEffect(() => {
         dispatch(addHistory({request: res}))
     });
     console.log('reqParams from App', reqParams);
+   
 },[reqParams]);
-
+    console.log('stateHistory from App', stateHistory);
     return(
         <React.Fragment>
             <Header />
@@ -69,8 +70,8 @@ useEffect(() => {
             <div>URL: {reqParams.url}</div>
             {/* function is passed as props in the Form component */}
             <Form setReqParams={setReqParams} />
-            <Results data={data}  />
-            <History history={stateHistory}/> 
+            <Results style={{fontSize:"10px" }} data={data}  />
+            <History deleteHistory={deleteHistory} dipatch={dispatch} history={stateHistory}/> 
             <Footer />
         </React.Fragment>
     )
