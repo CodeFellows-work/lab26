@@ -1,46 +1,30 @@
 
 import React, {useState} from 'react';
-import axios from 'axios';
-
-
 import './form.scss';
 
 function Form(props){
-  const [pokemon, setPokemon] = useState('');
+  const [url, setUrl] = useState('');
+  const [methods, setMethods] = useState('');
 
-  const handleSubmit = () => {
-    
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-    .then(function(response) {
-      let formData = {
-        method:'GET',
-        url: `https://pokeapi.co/api/v2/pokemon/${pokemon}`, 
-        data: response,
-      };
-      console.log('From form', formData);
-      props.handleApiCall({formData});
-    })
-    .catch( function(err){
-      console.error(err);
-    })
-
-
+  const handleSubmit = (e) => {
+   e.preventDefault();
+   props.setReqParams({url, methods})
+   console.log(url, methods);
   }
-
   
     return (
         <>
-            <form >
+            <form onSubmit={handleSubmit}>
                 <label>
                     <span>URL: </span>
-                    <input name='url' type='text' onChange={(e) => setPokemon(e.target.value)}/>
-                    <button onClick={() => handleSubmit()} style={{color: "#02a9ea"}} type="button">GO!</button>
+                    <input data-testid="url" placeholder='Enter URL' name='url' type='text' onChange={(e) => setUrl(e.target.value)}/>
+                    <button id="form" style={{color: "#02a9ea"}} type="submit">GO</button>
                 </label>
                     <label className="methods">
-                        <span id="get">GET</span>
-                        <span id="post">POST</span>
-                        <span id="put">PUT</span>
-                        <span id="delete">DELETE</span>
+                        <button onClick={(e)=> setMethods(e.target.value)} value="get" id="get">GET</button>
+                        <button onClick={(e)=> setMethods(e.target.value)} value="post" id="post">POST</button>
+                        <button onClick={(e)=> setMethods(e.target.value)} value="put" id="put">PUT</button>
+                        <button onClick={(e)=> setMethods(e.target.value)} value="delete" id="delete">DELETE</button>
                     </label>
             </form>
         </>
